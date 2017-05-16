@@ -101,7 +101,7 @@
 					<if var="a_m" value="Move({X})" />
 				</condition>
 				<effect util="1">
-					<set var="u_m" value="Ok, moving {X}" />
+					<set var="u_m" value="Ok, ich gehe nach {X}" />
 				</effect>
 			</case>
 			<case>
@@ -109,7 +109,7 @@
 					<if var="a_m" value="AskRepeat" />
 				</condition>
 				<effect util="1">
-					<set var="u_m" value="Sorry, could you repeat?" />
+					<set var="u_m" value="Sorry, kannst du das wiederholen?" />
 				</effect>
 			</case>
 		</rule>

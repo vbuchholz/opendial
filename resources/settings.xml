@@ -13,4 +13,8 @@
 	<discretisation>50</discretisation>
 	<recording>last</recording>
 	<timeout>400</timeout>
+	<modules>opendial.plugins.SphinxASR,opendial.plugins.MaryTTS</modules>
+	<lm>resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin</lm>
+   	<acousticmodel>resource:/edu/cmu/sphinx/models/en-us/en-us</acousticmodel>
+    <dictionary>resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict</dictionary>
 </settings>

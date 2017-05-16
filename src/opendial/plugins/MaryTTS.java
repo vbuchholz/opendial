@@ -27,6 +27,7 @@ import java.util.logging.*;
 import java.util.Collection;
 
 import javax.sound.sampled.AudioInputStream;
+import java.util.Locale;
 
 import marytts.LocalMaryInterface;
 import marytts.MaryInterface;
@@ -68,6 +69,7 @@ public class MaryTTS implements Module {
 	public MaryTTS(DialogueSystem system) {
 		try {
 			tts = new LocalMaryInterface();
+			tts.setLocale(Locale.GERMAN);
 		}
 		catch (MaryConfigurationException e) {
 			e.printStackTrace();

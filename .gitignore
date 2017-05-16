@@ -1,0 +1,15 @@
+# IntelliJ specific
+.idea/
+*.iml
+/out/
+
+# Gradle
+gradle/
+.gradle/
+gradlew*
+build/
+log/
+
+# OpenDial
+scripts/
+test/
