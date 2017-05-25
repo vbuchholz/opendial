@@ -26,14 +26,13 @@ public class Listener extends AbstractNodeMain {
     public void onStart(ConnectedNode connectedNode) {
         final Log log = connectedNode.getLog();
         this.subscriberUserSpeech = connectedNode.newSubscriber("systemspeech", std_msgs.String._TYPE);
-        MessageListener<String> systemspeechListener = new MessageListener<String>() {
+        subscriberUserSpeech.addMessageListener(new MessageListener<String>() {
             @Override
-            public void onNewMessage(String string) {
-                log.info("I heard: \"" + string.getData() + "\"");
-                //TODO: send data to tts or something else
+            public void onNewMessage(String message) {
+                log.info("I heard: \"" + message.getData() + "\"");
+                //TODO: do something with message
             }
-        };
-        subscriberUserSpeech.addMessageListener(systemspeechListener);
+        });
 
         //this.subscriberSomethingDifferent = connectedNode.newSubscriber("userspeech", std_msgs.String._TYPE);
         //subscriberSomethingDifferent.addMessageListener(message -> log.info("I heard: \"" + message.getData() + "\""));
@@ -43,5 +42,3 @@ public class Listener extends AbstractNodeMain {
         return this.subscriberUserSpeech != null;
     }
 }
-
-
