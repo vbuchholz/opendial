@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,6 +37,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import opendial.ROS_Comm.Connector;
+import opendial.ROS_Comm.Listener;
+import opendial.ROS_Comm.Talker;
 import opendial.bn.BNetwork;
 import opendial.bn.distribs.CategoricalTable;
 import opendial.bn.distribs.IndependentDistribution;
@@ -57,6 +61,10 @@ import opendial.modules.RemoteConnector;
 import opendial.modules.simulation.Simulator;
 import opendial.readers.XMLDomainReader;
 import opendial.readers.XMLDialogueReader;
+import org.ros.RosCore;
+import org.ros.node.DefaultNodeMainExecutor;
+import org.ros.node.NodeConfiguration;
+import org.ros.node.NodeMainExecutor;
 
 /**
  * <p>
@@ -858,6 +866,9 @@ public class DialogueSystem {
 		String domainFile = System.getProperty("domain");
 		String dialogueFile = System.getProperty("dialogue");
 		String simulatorFile = System.getProperty("simulator");
+
+        Connector ROSconnector = new Connector();
+        ROSconnector.connect();
 
 		system.getSettings().fillSettings(System.getProperties());
 		if (domainFile != null) {
