@@ -8,19 +8,30 @@ import org.ros.node.topic.Subscriber;
 import std_msgs.String;
 
 /**
+ * This class subscribes to ROS topics.
  * Created by vbuchholz on 25.05.17.
  */
 public class Listener extends AbstractNodeMain {
 
+    private Subscriber<String> subscriberUserSpeech;
+    //private Subscriber<String> subscriberSomethingDifferent;
+
     @Override
     public GraphName getDefaultNodeName() {
-        return GraphName.of("opendial/subscriber");
+        return GraphName.of("opendial/subscriberUserSpeech");
     }
 
     @Override
     public void onStart(ConnectedNode connectedNode) {
         final Log log = connectedNode.getLog();
-        Subscriber<String> subscriber = connectedNode.newSubscriber("chatter", std_msgs.String._TYPE);
-        subscriber.addMessageListener(message -> log.info("I heard: \"" + message.getData() + "\""));
+        this.subscriberUserSpeech = connectedNode.newSubscriber("systemspeech", std_msgs.String._TYPE);
+        subscriberUserSpeech.addMessageListener(message -> log.info("I heard: \"" + message.getData() + "\""));
+
+        //this.subscriberSomethingDifferent = connectedNode.newSubscriber("userspeech", std_msgs.String._TYPE);
+        //subscriberSomethingDifferent.addMessageListener(message -> log.info("I heard: \"" + message.getData() + "\""));
+    }
+
+    public boolean isRunning() {
+        return this.subscriberUserSpeech != null;
     }
 }

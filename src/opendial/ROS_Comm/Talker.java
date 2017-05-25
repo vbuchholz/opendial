@@ -1,6 +1,5 @@
 package opendial.ROS_Comm;
 
-import org.ros.concurrent.CancellableLoop;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
@@ -8,9 +7,13 @@ import org.ros.node.topic.Publisher;
 import std_msgs.String;
 
 /**
+ * This class publishes data via ROS.
  * Created by vbuchholz on 25.05.17.
  */
 public class Talker extends AbstractNodeMain {
+
+    private Publisher<String> publisherSystemSpeech;
+    private Publisher<String> publisherUserSpeech;
 
     @Override
     public GraphName getDefaultNodeName() {
@@ -19,25 +22,31 @@ public class Talker extends AbstractNodeMain {
 
     @Override
     public void onStart(final ConnectedNode connectedNode) {
-        final Publisher<String> publisher = connectedNode.newPublisher("chatter", std_msgs.String._TYPE);
-        // This CancellableLoop will be canceled automatically when the node shuts
-        // down.
-        connectedNode.executeCancellableLoop(new CancellableLoop() {
-            private int sequenceNumber;
+        this.publisherSystemSpeech = connectedNode.newPublisher("systemspeech", std_msgs.String._TYPE);
+        this.publisherUserSpeech = connectedNode.newPublisher("userspeech", std_msgs.String._TYPE);
+    }
 
-            @Override
-            protected void setup() {
-                sequenceNumber = 0;
-            }
+    public void publishSystemSpeech(java.lang.String speech) {
+        if (this.publisherSystemSpeech != null) {
+            std_msgs.String str = this.publisherSystemSpeech.newMessage();
+            str.setData(speech);
+            this.publisherSystemSpeech.publish(str);
+        } else {
+            System.out.println("------------------publisher null-----------------");
+        }
+    }
 
-            @Override
-            protected void loop() throws InterruptedException {
-                std_msgs.String str = publisher.newMessage();
-                str.setData("Hello world! " + sequenceNumber);
-                publisher.publish(str);
-                sequenceNumber++;
-                Thread.sleep(1000);
-            }
-        });
+    public void publishUserSpeech(java.lang.String speech) {
+        if (this.publisherUserSpeech != null) {
+            std_msgs.String str = this.publisherUserSpeech.newMessage();
+            str.setData(speech);
+            this.publisherUserSpeech.publish(str);
+        } else {
+            System.out.println("------------------publisher null-----------------");
+        }
+    }
+
+    public boolean isRunning() {
+        return this.publisherSystemSpeech != null && this.publisherUserSpeech != null;
     }
 }
