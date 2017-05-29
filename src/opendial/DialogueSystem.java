@@ -905,8 +905,7 @@ public class DialogueSystem {
 		log.info("Dialogue system started!");
 
         Talker talker = ROSconnector.getTalker();
-        talker.publishSystemSpeech("mary should get talking");
-        talker.publishUserSpeech("sphinx needs to process user speech");
+        talker.publishSystemSpeech("Hallo ich bin Flobi. Ich erzähle dir jetzt eine Geschichte.");
 	}
 
 }

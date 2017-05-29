@@ -5,6 +5,8 @@ import org.ros.node.DefaultNodeMainExecutor;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
 
+import java.net.URI;
+
 /**
  * This class starts rosCore and executes the talker and listener nodes.
  * Created by vbuchholz on 25.05.17.
@@ -20,24 +22,16 @@ public class Connector {
     }
 
     public void connect() {
-        RosCore rosCore = RosCore.newPublic(11311);
-        rosCore.start();
-
-        try {
-            rosCore.awaitStart();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
+        URI ROS_MASTER_URI = URI.create("http://localhost:11311");
         NodeMainExecutor nodeExecutor = DefaultNodeMainExecutor.newDefault();
 
         NodeConfiguration talkerConfig = NodeConfiguration.newPrivate();
-        talkerConfig.setMasterUri(rosCore.getUri());
+        talkerConfig.setMasterUri(ROS_MASTER_URI);
         talkerConfig.setNodeName("opendial/publisher");
         nodeExecutor.execute(this.talker, talkerConfig);
 
         NodeConfiguration listenerConfig = NodeConfiguration.newPrivate();
-        listenerConfig.setMasterUri(rosCore.getUri());
+        listenerConfig.setMasterUri(ROS_MASTER_URI);
         listenerConfig.setNodeName("opendial/subscriber");
         nodeExecutor.execute(this.listener, listenerConfig);
     }

@@ -7,13 +7,12 @@ import org.ros.node.topic.Publisher;
 import std_msgs.String;
 
 /**
- * This class publishes data via ROS.
+ * This class publishes speech via ROS.
  * Created by vbuchholz on 25.05.17.
  */
 public class Talker extends AbstractNodeMain {
 
     private Publisher<String> publisherSystemSpeech;
-    private Publisher<String> publisherUserSpeech;
 
     @Override
     public GraphName getDefaultNodeName() {
@@ -22,8 +21,7 @@ public class Talker extends AbstractNodeMain {
 
     @Override
     public void onStart(final ConnectedNode connectedNode) {
-        this.publisherSystemSpeech = connectedNode.newPublisher("systemspeech", std_msgs.String._TYPE);
-        this.publisherUserSpeech = connectedNode.newPublisher("userspeech", std_msgs.String._TYPE);
+        this.publisherSystemSpeech = connectedNode.newPublisher("/set/speech", std_msgs.String._TYPE);
     }
 
     public void publishSystemSpeech(java.lang.String speech) {
@@ -36,17 +34,7 @@ public class Talker extends AbstractNodeMain {
         }
     }
 
-    public void publishUserSpeech(java.lang.String speech) {
-        if (this.publisherUserSpeech != null) {
-            std_msgs.String str = this.publisherUserSpeech.newMessage();
-            str.setData(speech);
-            this.publisherUserSpeech.publish(str);
-        } else {
-            System.out.println("------------------publisher null-----------------");
-        }
-    }
-
     public boolean isRunning() {
-        return this.publisherSystemSpeech != null && this.publisherUserSpeech != null;
+        return this.publisherSystemSpeech != null;
     }
 }
