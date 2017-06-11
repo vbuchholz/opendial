@@ -1,6 +1,5 @@
 package opendial.ROS_Comm;
 
-import org.ros.RosCore;
 import org.ros.node.DefaultNodeMainExecutor;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
