@@ -22,8 +22,8 @@ public class Connector {
     }
 
     public void connect() {
-        //URI ROS_MASTER_URI = URI.create("http://10.42.0.1:11311");
-        URI ROS_MASTER_URI = URI.create("http://localhost:11311");
+        URI ROS_MASTER_URI = URI.create("http://10.42.0.1:11311");
+        //URI ROS_MASTER_URI = URI.create("http://localhost:11311");
         NodeMainExecutor nodeExecutor = DefaultNodeMainExecutor.newDefault();
 
         NodeConfiguration talkerConfig = NodeConfiguration.newPrivate();

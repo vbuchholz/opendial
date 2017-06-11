@@ -1,5 +1,6 @@
 package opendial.ROS_Comm;
 
+import opendial.DialogueSystem;
 import org.apache.commons.logging.Log;
 import org.ros.message.MessageListener;
 import org.ros.namespace.GraphName;
@@ -17,9 +18,12 @@ public class Listener extends AbstractNodeMain {
     private Subscriber<String> subscriberUserSpeech;
     //private Subscriber<String> subscriberSomethingDifferent;
 
+    /** The dialogue system to which the Listener is connected */
+    DialogueSystem system;
+
     @Override
     public GraphName getDefaultNodeName() {
-        return GraphName.of("opendial/subscriberUserSpeech");
+        return GraphName.of("opendial/subscriberSpeech");
     }
 
     @Override
@@ -31,6 +35,8 @@ public class Listener extends AbstractNodeMain {
             public void onNewMessage(String message) {
                 log.info("I heard: \"" + message.getData() + "\"");
                 //TODO: do something with message
+                java.lang.String userInput = "" + message;
+                system.addUserInput(userInput);
             }
         });
 
