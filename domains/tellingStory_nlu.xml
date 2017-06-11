@@ -1,0 +1,75 @@
+<domain>
+<model trigger="u_u">
+		 
+  		<rule>
+			<case>
+				<condition>
+					<if var="u_u" value="ja" relation="contains" />
+				</condition>
+				<effect prob="1">
+					<set var="a_u" value="Request(Yes)" />
+				</effect>
+			</case>
+			<case>
+				<condition operator="or">
+					<if var="u_u" value="nein" relation="contains" />
+					<if var="u_u" value="nee" relation="contains" />
+				</condition>
+				<effect prob="1">
+					<set var="a_u" value="Request(No)" />
+				</effect>
+			</case>
+		</rule>
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="u_u" value="Regenschirm" relation="contains" />
+					<if var="current_state" value="which_object" />
+				</condition>
+				<effect prob="1">
+					<set var="a_u" value="Request(Regenschirm)" />
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="u_u" value="Taschenlampe" relation="contains" />
+					<if var="current_state" value="which_object" />
+				</condition>
+				<effect prob="1">
+					<set var="a_u" value="Request(Taschenlampe)" />
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="u_u" value="Fernglas" relation="contains" />
+					<if var="current_state" value="which_object" />
+				</condition>
+				<effect prob="1">
+					<set var="a_u" value="Request(Fernglas)" />
+				</effect>
+			</case>
+		</rule>
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="u_u" value="links" relation="contains" />
+					<if var="current_state" value="which_direction" />
+				</condition>
+				<effect prob="1">
+					<set var="a_u" value="Request(left)" />
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="u_u" value="rechts" relation="contains" />
+					<if var="current_state" value="which_direction" />
+				</condition>
+				<effect prob="1">
+					<set var="a_u" value="Request(right)" />
+				</effect>
+			</case>
+		</rule>
+	</model> 
+</domain>

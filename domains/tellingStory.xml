@@ -1,0 +1,53 @@
+<domain>
+
+  <initialstate>
+
+		<!-- Starting prompt -->
+		<variable id="u_m">
+			<value>Hallo! Ich bin der geschichtenerzählende Roboter! Mein Name ist Flobi. </value>
+		</variable>
+		
+		<!-- We start the dialogue by asking if user want hear the story-->
+		<variable id="current_state">
+			<value>want_story</value>
+		</variable>  
+
+
+		
+		
+
+	</initialstate>
+	<!--nlg,dm -->
+	<import href="tellingStory_flow.xml"/>
+	
+	
+	<!-- nlu -->
+	<import href="tellingStory_nlu.xml"/>
+	
+	
+	<!--action machine-->
+	<model trigger="a_u,gesture">
+
+		<rule id="answer">
+			<case>
+				<condition operator="or">
+					<if var="a_u" value="Request({X})" />
+					<if var="gesture" value="Request({X})" />
+				</condition>
+				<effect util="1">
+					<set var="a_m" value="Answer({X})" />
+				</effect>
+			</case>
+		</rule>
+	</model>
+	
+	<!--system answers-->
+	<import href="tellingStory_answer.xml"/>
+	
+	
+	<settings>
+		<modules>opendial.modules.examples.ModuleExample2</modules>
+	</settings>
+	
+	
+</domain>

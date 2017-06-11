@@ -1,0 +1,208 @@
+<domain>
+<model trigger="a_m">
+	
+	<!--- want story -->
+		<rule>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(Yes)" />
+					<if var="current_state" value="want_story" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Ok, ich erzähle dir eine Geschichte. Rotkäppchen soll mit Kuchen und Wein zur kranken Großmutter gehen. Rotkäppchen sagt, dass es Fernglas, Taschenlampe und Regenschirm mitnehmen möchte. 
+					Die Mutter sagt, dass Rotkäppchen eine Sache auswählen darf. Kannst du den Gegenstand auswählen?" />
+					<set var="current_state" value="start_story" /> 
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(No)" />
+					<if var="current_state" value="want_story" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Ok, dann verabschiede ich mich." />
+				</effect>
+			</case>
+		</rule>
+		
+		<!--- which object -->
+		<rule>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(Regenschirm)" />
+					<if var="current_state" value="which_object" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Ok, Rotkäppchen nimmt den Regenschirm mit." />
+					<set var="current_state" value="start_journey" /> 
+					<set var="object" value="umbrella" /> 
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(Fernglas)" />
+					<if var="current_state" value="which_object" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Ok, Rotkäppchen nimmt das Fernglas mit." />
+					<set var="current_state" value="start_journey" /> 
+					<set var="object" value="binoculars" /> 
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(Taschenlampe)" />
+					<if var="current_state" value="which_object" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Ok, Rotkäppchen nimmt die Taschenlampe mit." />
+					<set var="current_state" value="start_journey" /> 
+					<set var="object" value="flashlight" /> 
+				</effect>
+			</case>
+		</rule>
+		
+		<!--- which direction -->
+		<rule>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(left)" />
+					<if var="current_state" value="which_direction" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Ok, Rotkäppchen geht nach links, nach einiger Zeit kommt es an eine Höhle." />
+					<set var="current_state" value="cave" />
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(right)" />
+					<if var="current_state" value="which_direction" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Ok, Rotkäppchen geht nach rechts, nach einiger Zeit begegnet es einem Mann." />
+					<set var="current_state" value="meet_man" />
+				</effect>
+			</case>
+		</rule>
+		
+		<!--- want through cave -->
+		<rule>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(Yes)" />
+					<if var="current_state" value="want_cave" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="" />
+					<set var="current_state" value="through_cave" /> 
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(No)" />
+					<if var="current_state" value="want_cave" />
+				</condition>
+				<effect util="1">
+					<set var="current_state" value="meet_wolf" />
+				</effect>
+			</case>
+		</rule>
+		
+		<!--- want on top of hill -->
+		<rule>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(Yes)" />
+					<if var="current_state" value="want_hill" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="" />
+					<set var="current_state" value="on_hill" /> 
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(No)" />
+					<if var="current_state" value="want_hill" />
+				</condition>
+				<effect util="1">
+					<set var="current_state" value="meet_wolf" />
+				</effect>
+			</case>
+		</rule>
+		
+		<!--- want to pick flowers --> 
+		<rule>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(Yes)" />
+					<if var="current_state" value="want_flowers" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="" />
+					<set var="current_state" value="normal_end" /> 
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(No)" />
+					<if var="current_state" value="want_flowers" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Rotkäppchen wundert sich, dass der Wolf so nett ist, obwohl sie immer vor dem Wolf gewarnt wurde. Sie rennt lieber schnell zur Großmutter." />
+					<set var="current_state" value="different_end" />
+				</effect>
+			</case>
+		</rule>
+		
+		<!--- want to swap object -->
+		<rule>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(Yes)" />
+					<if var="current_state" value="want_swap" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="In Ordnung, Rotkäppchen tauscht. Sie verabschieden sich und gehen ihres Weges." />
+					<set var="current_state" value="hungry" /> 
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(No)" />
+					<if var="current_state" value="want_swap" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Na gut, wenn du nicht tauschen möchtest, dann tauscht Rotkäppchen nicht." />
+					<set var="current_state" value="meet_wolf" />
+				</effect>
+			</case>
+		</rule>
+		
+		<!--- want to share -->
+		<rule>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(Yes)" />
+					<if var="current_state" value="want_share" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Sehr gut. Der Mann bekommt das Bärenwurstbrötchen. Er freut sich sehr darüber, da er wirklich sehr hungrig ist." />
+					<set var="current_state" value="tip" /> 
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="a_m" value="Answer(No)" />
+					<if var="current_state" value="want_share" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Rotkäppchen ist nun auch ein bisschen hungrig und isst das Bärenwurstbrötchen selbst." />
+					<set var="current_state" value="meet_wolf" />
+				</effect>
+			</case>
+		</rule>
+	</model>
+
+</domain>

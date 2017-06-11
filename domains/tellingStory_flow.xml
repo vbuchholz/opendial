@@ -1,0 +1,202 @@
+
+<domain>
+<model trigger = "current_state">
+		<!-- Start -->
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="want_story" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Soll ich dir eine Geschichte erzählen?" />
+				</effect>
+			</case>
+		</rule>
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="start_story" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value=" Was soll Rotkäppchen mitnehmen?" />
+					<set var = "current_state" value = "which_object"/>
+				</effect>
+			</case>
+		</rule>
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="start_journey" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Die Mutter sagt zu Rotkäppchen, geh nicht vom Weg ab, geh direkt zur Großmutter. Rotkäppchen kommt an eine Kreuzung. Es kann links oder rechts gehen, beide Wege führen zur Großmutter, welchen Weg soll Rotkäppchen gehen?" />
+					<set var = "current_state" value = "which_direction"/>
+				</effect>
+			</case>
+		</rule>
+		
+
+		<!-- LEFT -->
+		
+		<!-- cave -->
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="cave" />
+					<if var="object" value="binoculars"/>
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Rotkäppchen schaut in die Höhle. In der Höhle ist es sehr dunkel und Rotkäppchen kann gar nichts sehen. Dort traut es sich nicht hinein. Deshalb geht es weiter." />
+					<set var="current_state" value = "hill"/>
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="current_state" value="cave" />
+					<if var="object" value="umbrella"/>
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Rotkäppchen schaut in die Höhle. In der Höhle ist es sehr dunkel und Rotkäppchen kann gar nichts sehen. Dort traut es sich nicht hinein. Deshalb geht es weiter." />
+					<set var="current_state" value = "meet_wolf"/>
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="current_state" value="cave" />
+					<if var="object" value="flashlight"/>
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Rotkäppchen schaut in die Höhle. In der Höhle ist es sehr dunkel, aber Rotkäppchen hat ja zum Glück eine Taschenlampe dabei! Soll es mutig sein und die Höhle erkunden?" />
+					<set var="current_state" value = "want_cave"/>
+				</effect>
+			</case>
+		</rule>
+		
+		<!-- through cave -->
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="through_cave" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Also gut! Rotkäppchen nimmt die Taschenlampe aus seinem Korb und schaltet sie ein. Vorsichtig geht es tiefer in die Höhle. Wie aufregend! Oh, dort ist ein Lichtschein, die Höhle ist ein Tunnel. 
+											Als Rotkäppchen aus dem Dunkel in die Sonne hinaus tritt, sieht sie ein Meer voller schöner bunter Blumen. Gleich will es einen Strauß für die Großmutter pflücken! Als sie weiter geht begegnet sie dem Jäger.
+											und dieser warnt sie vor dem Wolf. Schnell läuft Rotkäppchen zur Großmutter." />
+					<set var = "current_state" value = "normal_end"/>
+				</effect>
+			</case>
+		</rule>
+		
+		<!-- hill -->
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="hill" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Über der Höhle ist ein Hügel. Von dem aus hat man bestimmt eine tolle Aussicht und mit dem Fernglas kann Rotkäppchen sicher weit schauen. Soll es die Aussicht genießen?" />
+					<set var="current_state" value = "want_hill"/>
+				</effect>
+			</case>
+		</rule>
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="on_hill" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Rotkäppchen klettert auf den Berg. Es hat eine wirklich fabelhafte Aussicht. Aber dahinten! Was ist denn das? Wieso schleicht denn der Wolf dort rum? Rotkäppchen 
+					bekommt es mit der Angst zu tun und läuft lieber schnell zur Großmutter." />
+					<set var="current_state" value = "different_end"/>
+				</effect>
+			</case>
+		</rule>
+		
+		
+		<!--- RIGHT -->
+		
+		<!--- Bärenwurstbrötchen -->
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="meet_man" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value=" Der Mann fragt: Was hast du da? Ist das etwa ein {X}? Kann ich das haben? Du bekommst auch ein super leckeres Bärenwurstbrötchen von mir!
+					 Soll Rotkäppchen ihr Objekt gegen ein Bärenwurstbrötchen tauschen?"/>
+					<set var="current_state" value = "want_swap"/>
+				</effect>
+			</case>
+		</rule>
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="hungry" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Nach einiger Zeit begegnet Rotkäppchen einem anderen Mann. Der Mann ist sehr hungrig und fragt Rotkäppchen, 
+											ob es etwas zu essen führ ihn hat. Rotkäppchen hat noch das Bärenwurstbrötchen. Soll Rotkäppchen dem Mann
+											das Bärenwurstbrötchen geben?"/>
+					<set var="current_state" value = "want_share"/>
+				</effect>
+			</case>		 
+		</rule>
+		
+		<!--- get tip -->
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="tip" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Da der Mann sich so über das Bärenwurstbrötchen freut, gibt er Rotkäppchen als Dank einen wichtigen Hinweis: 
+											Im Wald streucht ein Wolf herum! Das hört sich nicht gut an! Rotkäppchen rennt nun lieber schnell zur Großmutter."/>
+					<set var="current_state" value = "different_end"/>
+				</effect>
+			</case>	
+		</rule>
+		
+
+		<!-- meet wolf -->
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="meet_wolf" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Rotkäppchen geht ihres Weges. Tiefer im Wald begegnet es einem Wolf. Er sagt: Hallo Rotkäppchen! Sieh nur, dort hinten wachsen solch wunderbare bunte Blumen. 
+					Möchtest du nicht der Großmutter einen tollen Strauß pflücken. Sie wird sich sicherlich sehr freuen! Soll Rotkäppchen Blumen für die Großmutter pflücken?" />
+					<set var="current_state" value = "want_flowers"/>
+				</effect>
+			</case>
+		</rule>		
+		
+		<!-- end -->
+		
+		<rule>
+			<case>
+				<condition>
+					<if var="current_state" value="normal_end" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Normales Ende." />
+				</effect>
+			</case>
+			<case>
+				<condition>
+					<if var="current_state" value="different_end" />
+				</condition>
+				<effect util="1">
+					<set var="u_m" value="Anderes Ende." />
+				</effect>
+			</case>
+		</rule>
+	</model> 
+</domain>
