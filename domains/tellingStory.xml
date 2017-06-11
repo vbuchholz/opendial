@@ -46,7 +46,7 @@
 	
 	
 	<settings>
-		<modules>opendial.modules.examples.ModuleExample2</modules>
+		<modules>opendial.modules.examples.ModuleTest</modules>
 	</settings>
 	
 	

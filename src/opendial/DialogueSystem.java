@@ -868,7 +868,7 @@ public class DialogueSystem {
 		String simulatorFile = System.getProperty("simulator");
 
         Connector ROSconnector = new Connector();
-        ROSconnector.connect();
+        //ROSconnector.connect();
 
 		system.getSettings().fillSettings(System.getProperties());
 		if (domainFile != null) {
