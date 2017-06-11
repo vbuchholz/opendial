@@ -32,10 +32,8 @@ public class SpeechOutputModule implements Module {
      * @param system the dialogue system
      */
     public SpeechOutputModule(DialogueSystem system) {
-        rosTalker = new Talker();
-
         this.system = system;
-        system.enableSpeech(true);
+        rosTalker = this.system.getROSconnector().getTalker();
     }
 
     /**

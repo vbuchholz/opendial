@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,8 +37,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import opendial.ROS_Comm.Connector;
-import opendial.ROS_Comm.Listener;
-import opendial.ROS_Comm.Talker;
 import opendial.bn.BNetwork;
 import opendial.bn.distribs.CategoricalTable;
 import opendial.bn.distribs.IndependentDistribution;
@@ -99,6 +96,9 @@ public class DialogueSystem {
 	// whether the system is paused or active
 	protected boolean paused = true;
 
+	// ROS connector
+    private Connector ROSconnector;
+
 	// ===================================
 	// SYSTEM INITIALISATION
 	// ===================================
@@ -141,6 +141,16 @@ public class DialogueSystem {
 		this();
 		changeDomain(XMLDomainReader.extractDomain(domainFile));
 	}
+
+    /**
+     * Creates a new dialogue system with the provided ROSconnector
+     *
+     * @param ROSconnector ROSconnector
+     */
+    public DialogueSystem(Connector ROSconnector) {
+        this();
+        this.ROSconnector = ROSconnector;
+    }
 
 	/**
 	 * Starts the dialogue system and its modules.
@@ -353,7 +363,7 @@ public class DialogueSystem {
 	 * @return the variables that were updated in the process not be updated
 	 */
 	public Set<String> addUserInput(String userInput) {
-		Assignment a = new Assignment(settings.userInput, userInput);
+        Assignment a = new Assignment(settings.userInput, userInput);
 		return addContent(a);
 	}
 
@@ -835,6 +845,10 @@ public class DialogueSystem {
 		return getModule(RemoteConnector.class).getLocalAddress();
 	}
 
+	public Connector getROSconnector() {
+	    return ROSconnector;
+    }
+
 	// ===================================
 	// MAIN METHOD
 	// ===================================
@@ -857,14 +871,14 @@ public class DialogueSystem {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+        Connector ROSconnector = new Connector();
+        DialogueSystem system = new DialogueSystem(ROSconnector);
+        ROSconnector.setSystem(system);
+        ROSconnector.connect();
 
-		DialogueSystem system = new DialogueSystem();
 		String domainFile = System.getProperty("domain");
 		String dialogueFile = System.getProperty("dialogue");
 		String simulatorFile = System.getProperty("simulator");
-
-        Connector ROSconnector = new Connector();
-        //ROSconnector.connect();
 
 		system.getSettings().fillSettings(System.getProperties());
 		if (domainFile != null) {
@@ -899,9 +913,6 @@ public class DialogueSystem {
 
 		system.startSystem();
 		log.info("Dialogue system started!");
-
-        Talker talker = ROSconnector.getTalker();
-        talker.publishSystemSpeech("Hallo ich bin Flobi. Ich erzähle dir jetzt eine Geschichte.");
 	}
 
 }

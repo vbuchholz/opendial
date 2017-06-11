@@ -46,7 +46,7 @@
 	
 	
 	<settings>
-		<modules>opendial.modules.examples.ModuleTest</modules>
+		<modules>opendial.modules.SpeechOutputModule</modules>
 	</settings>
 	
 	

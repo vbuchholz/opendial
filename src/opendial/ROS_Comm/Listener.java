@@ -9,6 +9,8 @@ import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Subscriber;
 import std_msgs.String;
 
+import java.util.List;
+
 /**
  * This class subscribes to ROS topics.
  * Created by vbuchholz on 25.05.17.
@@ -19,7 +21,11 @@ public class Listener extends AbstractNodeMain {
     //private Subscriber<String> subscriberSomethingDifferent;
 
     /** The dialogue system to which the Listener is connected */
-    DialogueSystem system;
+    private DialogueSystem system;
+
+    public Listener(DialogueSystem system) {
+        this.system = system;
+    }
 
     @Override
     public GraphName getDefaultNodeName() {
@@ -35,7 +41,8 @@ public class Listener extends AbstractNodeMain {
             public void onNewMessage(String message) {
                 log.info("I heard: \"" + message.getData() + "\"");
                 //TODO: do something with message
-                java.lang.String userInput = "" + message;
+                java.lang.String userInput = "" + message.getData();
+                System.out.println("Message is: " + userInput);
                 system.addUserInput(userInput);
             }
         });
